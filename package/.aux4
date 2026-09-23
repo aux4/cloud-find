@@ -1,0 +1,80 @@
+{
+  "scope": "aux4",
+  "name": "cloud-find",
+  "version": "0.1.0",
+  "description": "Find the right aux4 command for a natural-language intent, using the aux4.cloud command finder",
+  "license": "Apache-2.0",
+  "tags": [
+    "cloud",
+    "find",
+    "search"
+  ],
+  "dependencies": [
+    "aux4/cloud@1.2.0"
+  ],
+  "profiles": [
+    {
+      "name": "main",
+      "commands": [
+        {
+          "name": "find",
+          "execute": [
+            "profile:cloud-find"
+          ],
+          "help": {
+            "text": "Find the right aux4 command for what you want to do"
+          }
+        }
+      ]
+    },
+    {
+      "name": "cloud-find",
+      "commands": [
+        {
+          "name": "ask",
+          "execute": [
+            "node ${packageDir}/lib/client.mjs values(query, findScope, findMachine, apiUrl, scope, json)"
+          ],
+          "help": {
+            "text": "Rank the best-matching aux4 command for a natural-language request",
+            "variables": [
+              {
+                "name": "query",
+                "text": "What you want to do, in natural language",
+                "arg": true
+              },
+              {
+                "name": "findScope",
+                "text": "aux4-owned scope hosting the command finder machine",
+                "default": "aux4",
+                "env": "AUX4_CLOUD_FIND_SCOPE"
+              },
+              {
+                "name": "findMachine",
+                "text": "Name of the deployed command finder machine",
+                "default": "cloud-find",
+                "env": "AUX4_CLOUD_FIND_MACHINE"
+              },
+              {
+                "name": "apiUrl",
+                "text": "Cloud API base URL",
+                "env": "AUX4_CLOUD_API_URL",
+                "default": "https://api.aux4.cloud"
+              },
+              {
+                "name": "scope",
+                "text": "Your own aux4 Cloud scope, billed for the query",
+                "env": "AUX4_CLOUD_SCOPE"
+              },
+              {
+                "name": "json",
+                "text": "Print raw JSON instead of a formatted list",
+                "default": "false"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

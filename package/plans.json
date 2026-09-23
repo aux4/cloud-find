@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "metrics": {
+    "find-queries": {
+      "label": "Command finder queries",
+      "type": "counter"
+    }
+  },
+  "plans": {
+    "standard": {
+      "price": {
+        "monthly": 5
+      },
+      "limits": {
+        "find-queries": 500
+      }
+    }
+  }
+}
