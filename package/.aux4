@@ -64,7 +64,8 @@
               {
                 "name": "scope",
                 "text": "Your own aux4 Cloud scope, billed for the query",
-                "env": "AUX4_CLOUD_SCOPE"
+                "env": "AUX4_CLOUD_SCOPE",
+                "default": ""
               },
               {
                 "name": "json",

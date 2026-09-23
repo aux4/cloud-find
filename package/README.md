@@ -1,6 +1,6 @@
 # aux4/cloud-find
 
-Find the right aux4 command for a natural-language request. `aux4 find` builds a picture of your
+Find the right aux4 command for a natural-language request. `aux4 find ask` builds a picture of your
 own installed commands (help text only) and asks the aux4.cloud command finder to rank the best
 match, without you ever holding a jev/TypeSafe API key yourself.
 
@@ -13,7 +13,7 @@ aux4 aux4 pkger install aux4/cloud-find
 ## Quick Start
 
 ```bash
-aux4 find "send a message to my team"
+aux4 find ask "send a message to my team"
 ```
 
 ```text
@@ -21,12 +21,12 @@ aux4 find "send a message to my team"
 5%   aux4 slack list (aux4/slack)
 ```
 
-If you have no active aux4 Cloud session (or the finder is unreachable), `aux4 find` falls back to
+If you have no active aux4 Cloud session (or the finder is unreachable), `aux4 find ask` falls back to
 the local `aux4 aux4 pkger find` BM25 search automatically — you always get a result.
 
 ## How it works
 
-1. **Build your tree.** `aux4 find` walks your own installed packages (the same manifests
+1. **Build your tree.** `aux4 find ask` walks your own installed packages (the same manifests
    `aux4 --help` reads) and collects every non-private, non-profile-routing command's help text —
    never full man pages, and never anything from other users' installs.
 2. **Fingerprint it.** A stable fingerprint of that tree is sent on every call. The service caches

@@ -16,7 +16,7 @@ candidates with confidence.
 #### Usage
 
 ```bash
-aux4 cloud-find ask "<query>" [--findScope <scope>] [--findMachine <name>] [--apiUrl <url>] [--json true|false]
+aux4 find ask "<query>" [--findScope <scope>] [--findMachine <name>] [--apiUrl <url>] [--json true|false]
 ```
 
 --query          What you want to do, in natural language (positional)
@@ -29,7 +29,7 @@ aux4 cloud-find ask "<query>" [--findScope <scope>] [--findMachine <name>] [--ap
 #### Example
 
 ```bash
-aux4 cloud-find ask "send a message to my team"
+aux4 find ask "send a message to my team"
 ```
 
 ```text
@@ -38,7 +38,7 @@ aux4 cloud-find ask "send a message to my team"
 ```
 
 ```bash
-aux4 cloud-find ask "send a message to my team" --json true
+aux4 find ask "send a message to my team" --json true
 ```
 
 ```json
