@@ -52,7 +52,7 @@
               {
                 "name": "findMachine",
                 "text": "Name of the deployed command finder machine",
-                "default": "cloud-find",
+                "default": "pkger",
                 "env": "AUX4_CLOUD_FIND_MACHINE"
               },
               {

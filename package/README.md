@@ -44,7 +44,7 @@ the local `aux4 aux4 pkger find` BM25 search automatically — you always get a 
 |---|---|---|
 | `AUX4_CLOUD_SCOPE` | Your own aux4 Cloud scope — billed for each query. | *(none)* |
 | `AUX4_CLOUD_FIND_SCOPE` | The aux4-owned scope hosting the command finder machine. | `aux4` |
-| `AUX4_CLOUD_FIND_MACHINE` | Name of the deployed command finder machine. | `cloud-find` |
+| `AUX4_CLOUD_FIND_MACHINE` | Name of the deployed command finder machine. | `pkger` |
 | `AUX4_CLOUD_API_URL` | Cloud API base URL. | `https://api.aux4.cloud` |
 
 ## Metering

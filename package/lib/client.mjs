@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// aux4/cloud-find "ask" - the public client for the aux4.cloud command finder.
+// aux4/cloud-find "ask" (client subcommand) - the public client for the aux4.cloud command finder.
 //
 // Builds the command tree from the CALLER's own installed packages (help
 // text only, private/profile-routing commands filtered), sends a
 // fingerprint + the tree only on a cache miss, and calls the
 // aux4/cloud-find-service machine through the aux4 Cloud run transport
-// (`aux4 cloud <machine> ask`), which forwards only the command name plus
+// (`aux4 cloud pkger find`), which forwards only the command name plus
 // one stdin body - never flags - so the whole request travels as JSON on
 // stdin. Falls back to local `aux4 aux4 pkger find` when the caller has no
 // cloud session or the service is unavailable.
@@ -41,7 +41,7 @@ function callService({ findScope, findMachine, apiUrl }, requestBody) {
   const args = ["cloud"];
   if (findScope) args.push("--scope", findScope);
   if (apiUrl) args.push("--apiUrl", apiUrl);
-  args.push(findMachine, "ask");
+  args.push(findMachine, "find");
   const stdout = execFileSync("aux4", args, {
     input: JSON.stringify(requestBody),
     encoding: "utf8"

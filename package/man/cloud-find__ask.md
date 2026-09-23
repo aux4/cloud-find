@@ -2,8 +2,8 @@
 
 `ask` builds the command tree from your own installed aux4 packages (help text only — private
 commands and pure profile-routing commands are filtered out, and long help text is capped) and
-sends it, along with your query, to the aux4.cloud command finder machine. Returns ranked command
-candidates with confidence.
+sends it, along with your query, to the aux4.cloud command finder machine — `aux4 cloud pkger find`
+under the hood, in the `aux4`-owned scope. Returns ranked command candidates with confidence.
 
 - Only a fingerprint of your tree is sent on most calls; the full tree is only re-sent when the
   finder's server-side cache doesn't recognize the fingerprint.
@@ -21,7 +21,7 @@ aux4 find ask "<query>" [--findScope <scope>] [--findMachine <name>] [--apiUrl <
 
 --query          What you want to do, in natural language (positional)
 --findScope      aux4-owned scope hosting the command finder machine (default: `aux4`)
---findMachine    Name of the deployed command finder machine (default: `cloud-find`)
+--findMachine    Name of the deployed command finder machine (default: `pkger`)
 --apiUrl         Cloud API base URL (default: `https://api.aux4.cloud`)
 --scope          Your own aux4 Cloud scope, billed for the query (env: `AUX4_CLOUD_SCOPE`)
 --json           Print raw JSON instead of a formatted list (default: `false`)
