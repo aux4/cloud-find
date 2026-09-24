@@ -1,7 +1,7 @@
 {
   "scope": "aux4",
   "name": "cloud-find",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find the right aux4 command for a natural-language intent, using the aux4.cloud command finder",
   "license": "Apache-2.0",
   "tags": [
@@ -10,7 +10,7 @@
     "search"
   ],
   "dependencies": [
-    "aux4/cloud@1.2.0"
+    "aux4/cloud@^1.2.0"
   ],
   "profiles": [
     {
