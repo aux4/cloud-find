@@ -17,12 +17,21 @@ aux4 find ask "send a message to my team"
 ```
 
 ```text
-91%  aux4 slack post (aux4/slack)
-5%   aux4 slack list (aux4/slack)
+94%  aux4 slack post (aux4/slack)
 ```
 
-If you have no active aux4 Cloud session (or the finder is unreachable), `aux4 find ask` falls back to
-the local `aux4 aux4 pkger find` BM25 search automatically — you always get a result.
+Output depends on how confident the finder is:
+
+| Confidence | What you see |
+|---|---|
+| `>= 90%` | The single best command. |
+| `50-89%` | "Not sure - did you mean:" with the top 3 candidates. |
+| `< 50%` | The finder says it's unsure and shows local `aux4 aux4 pkger find` results instead. |
+
+If you have no active aux4 Cloud session, or the finder is unreachable for any other reason, `aux4
+find ask` falls back to the local `aux4 aux4 pkger find` BM25 search the same way — you always get a
+result. Pass `--json true` to get the full ranked candidate list with confidences instead of the
+tiered presentation (useful for scripting).
 
 ## How it works
 
