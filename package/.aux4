@@ -74,6 +74,16 @@
               }
             ]
           }
+        },
+        {
+          "name": "debug-present",
+          "private": true,
+          "execute": [
+            "stdin:node ${packageDir}/lib/debug-present.mjs"
+          ],
+          "help": {
+            "text": "TEST-ONLY: exercises the confidence-tier presentation logic against a stubbed response piped in on stdin, with no cloud call."
+          }
         }
       ]
     }
