@@ -42,16 +42,17 @@ the local `aux4 aux4 pkger find` BM25 search automatically — you always get a 
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `AUX4_CLOUD_SCOPE` | Your own aux4 Cloud scope — billed for each query. | *(none)* |
+| `AUX4_CLOUD_SCOPE` | Your own aux4 Cloud scope — must have an active aux4 Cloud subscription. | *(none)* |
 | `AUX4_CLOUD_FIND_SCOPE` | The aux4-owned scope hosting the command finder machine. | `aux4` |
 | `AUX4_CLOUD_FIND_MACHINE` | Name of the deployed command finder machine. | `pkger` |
 | `AUX4_CLOUD_API_URL` | Cloud API base URL. | `https://api.aux4.cloud` |
 
-## Metering
+## Included with aux4 Cloud
 
-Each query records one `find-queries` unit against your `aux4/cloud-find` plan. An over-limit or
-unentitled call is refused by the finder machine before any jev spend, and you'll see a clear error
-rather than a partial or silently-billed result.
+aux4/cloud-find is **included with an active aux4 Cloud subscription** — it is not a separately
+purchased package, and it is free to install. The finder machine checks that your scope has an
+active aux4 Cloud subscription before answering, and refuses (with a clear error, before any jev
+spend) if it doesn't. A lightweight per-scope daily query cap applies as an anti-abuse measure.
 
 ## Privacy note
 
