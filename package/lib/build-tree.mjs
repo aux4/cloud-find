@@ -58,8 +58,11 @@ function truncate(text) {
 
 // Builds the flat node list for ONE manifest, walking every profile
 // reachable from "main" through profile: routing, so the tree mirrors what
-// a user actually sees under `aux4 <command>`.
-function walkManifest(manifest, packageId) {
+// a user actually sees under `aux4 <command>`. `branchInfo` is filled in
+// (path -> {help, packageId}) for every routing-only command encountered,
+// since those commands are never emitted as leaf nodes themselves but often
+// DO carry real help text worth keeping for the synthesized branch node.
+function walkManifest(manifest, packageId, branchInfo) {
   const profilesByName = new Map();
   for (const profile of manifest.profiles || []) {
     profilesByName.set(profile.name, profile);
@@ -79,6 +82,13 @@ function walkManifest(manifest, packageId) {
       const path = parentPath ? `${parentPath} ${command.name}` : command.name;
 
       if (isRoutingOnly(command)) {
+        const fullPath = `aux4 ${path}`;
+        const help = command.help && command.help.text;
+        if (help && help.trim() && help.trim() !== command.name) {
+          branchInfo.set(fullPath, { help, packageId });
+        } else if (!branchInfo.has(fullPath)) {
+          branchInfo.set(fullPath, { help: null, packageId });
+        }
         const nextProfile = command.execute[0].replace(/^profile:/, "");
         walkProfile(nextProfile, path);
         continue;
@@ -101,10 +111,13 @@ export function buildLocalTree() {
   const manifests = listInstalledManifests();
   const allNodes = [];
   const branchPaths = new Set();
+  const branchInfo = new Map(); // path -> {help, packageId}
+  const packageDescriptions = new Map(); // packageId -> description
 
   for (const { scope, name, manifest } of manifests) {
     const packageId = `${scope}/${name}`;
-    const nodes = walkManifest(manifest, packageId);
+    if (manifest.description) packageDescriptions.set(packageId, manifest.description);
+    const nodes = walkManifest(manifest, packageId, branchInfo);
     for (const node of nodes) {
       allNodes.push(node);
       if (node.parent) branchPaths.add(node.parent);
@@ -112,17 +125,29 @@ export function buildLocalTree() {
   }
 
   // Synthesize branch nodes (one per distinct parent path) so the tree has
-  // navigable non-leaf entries too, each labeled with its own path segment
-  // since branch commands aren't installed commands themselves.
+  // navigable non-leaf entries too - these are profile-routing commands,
+  // not installed leaf commands, so their label comes from (in order):
+  // (1) the routing command's own help text, when it's real (not empty and
+  // not just its own command name - many routing commands only have
+  // "text": "<name>", which is useless as a Choice label per CLS-015's
+  // measured finding); (2) the owning package's .aux4 `description` field -
+  // the same source `aux4 --help` one-liners come from; (3) the bare path
+  // segment as a last resort so a node always has SOME label.
   const existingPaths = new Set(allNodes.map((n) => n.path));
   for (const branchPath of branchPaths) {
     if (existingPaths.has(branchPath)) continue;
     const segments = branchPath.split(" ");
     const parent = segments.slice(0, -1).join(" ");
+    const info = branchInfo.get(branchPath);
+    const help =
+      (info && info.help) ||
+      (info && packageDescriptions.get(info.packageId)) ||
+      segments[segments.length - 1];
     allNodes.push({
       path: branchPath,
-      help: segments[segments.length - 1],
-      parent: parent === "aux4" ? "" : parent
+      help: truncate(help),
+      parent: parent === "aux4" ? "" : parent,
+      package: info && info.packageId
     });
     existingPaths.add(branchPath);
   }
